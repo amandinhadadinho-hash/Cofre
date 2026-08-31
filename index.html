@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>O Cofre Lógico</title>
+    <style>
+        /* Estilização inspirada em The House of Da Vinci */
+        body {
+            font-family: 'Georgia', serif;
+            background-color: #1a1511;
+            background-image: radial-gradient(circle, #2a221b 0%, #110d0a 100%);
+            color: #d4c4a8;
+            margin: 0;
+            padding: 40px 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        h2 {
+            font-family: 'Courier New', Courier, monospace;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            color: #b89947;
+            text-shadow: 1px 1px 5px rgba(0,0,0,0.8);
+            text-align: center;
+            margin-bottom: 40px;
+            border-bottom: 2px solid #574431;
+            padding-bottom: 15px;
+            width: 100%;
+            max-width: 600px;
+        }
+
+        .enigma-container {
+            background-color: #241d17;
+            border: 2px solid #574431;
+            border-radius: 4px;
+            padding: 30px;
+            margin-bottom: 25px;
+            width: 100%;
+            max-width: 600px;
+            box-shadow: inset 0 0 20px rgba(0,0,0,0.8), 0 5px 15px rgba(0,0,0,0.6);
+            position: relative;
+        }
+
+        /* Adiciona enfeites nos cantos para simular ferragens */
+        .enigma-container::before, .enigma-container::after {
+            content: '';
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background-color: #7b6241;
+            border-radius: 50%;
+        }
+        .enigma-container::before { top: 10px; left: 10px; box-shadow: 520px 0 0 #7b6241; }
+        .enigma-container::after { bottom: 10px; left: 10px; box-shadow: 520px 0 0 #7b6241; }
+
+        h3 {
+            color: #b89947;
+            margin-top: 0;
+            font-size: 1.2em;
+            text-align: center;
+            border-bottom: 1px dashed #574431;
+            padding-bottom: 10px;
+        }
+
+        p {
+            line-height: 1.8;
+            font-size: 1.05em;
+            text-align: justify;
+        }
+
+        .oculto {
+            display: none;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 12px;
+            margin-top: 15px;
+            margin-bottom: 15px;
+            background-color: #110d0a;
+            border: 1px solid #7b6241;
+            color: #d4c4a8;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 1em;
+            box-sizing: border-box;
+        }
+
+        input[type="text"]:focus {
+            outline: none;
+            border-color: #b89947;
+            box-shadow: 0 0 8px rgba(184, 153, 71, 0.4);
+        }
+
+        button {
+            display: block;
+            width: 100%;
+            padding: 12px;
+            background-color: #4a3826;
+            color: #d4c4a8;
+            border: 1px solid #7b6241;
+            cursor: pointer;
+            font-family: 'Georgia', serif;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        button:hover {
+            background-color: #b89947;
+            color: #110d0a;
+        }
+
+        .erro {
+            color: #cc4444;
+            font-size: 0.9em;
+            display: none;
+            margin-top: -5px;
+            margin-bottom: 15px;
+            text-align: center;
+            font-style: italic;
+        }
+
+        /* Estilização específica da Tabela do Caça-Palavras */
+        table.caca-palavras {
+            margin: 20px auto;
+            border-collapse: collapse;
+            background-color: #1a1511;
+            border: 2px solid #574431;
+        }
+
+        table.caca-palavras td {
+            width: 35px;
+            height: 35px;
+            text-align: center;
+            vertical-align: middle;
+            border: 1px solid #4a3826;
+            font-family: 'Courier New', Courier, monospace;
+            font-weight: bold;
+            font-size: 1.1em;
+            color: #8f7a5b;
+            cursor: crosshair;
+            transition: color 0.3s, text-shadow 0.3s;
+        }
+
+        table.caca-palavras td:hover {
+            color: #b89947;
+            text-shadow: 0 0 5px #b89947;
+            background-color: #2a221b;
+        }
+
+        #premio {
+            text-align: center;
+            border-color: #5ab847;
+        }
+        
+        #premio h3 {
+            color: #5ab847;
+            border-bottom: 1px dashed #5ab847;
+        }
+    </style>
+</head>
+<body>
+
+    <h2>O Cofre Lógico</h2>
+
+    <!-- ENIGMA 1 -->
+    <div id="etapa1" class="enigma-container">
+        <h3>1º Engrenagem: O Falso Saldo</h3>
+        <p>Um fazendeiro tinha 17 ovelhas em um campo. Uma forte tempestade passou e todas, exceto 9, morreram. Quantas ovelhas sobraram vivas?</p>
+        <input type="text" id="resposta1" placeholder="Insira a dedução...">
+        <p id="erro1" class="erro">A engrenagem travou. Leia as variáveis do enunciado novamente, sem pressa.</p>
+        <button onclick="verificarEnigma('resposta1', ['9', 'nove'], 'etapa2', 'erro1')">Girar Mecanismo</button>
+    </div>
+
+    <!-- ENIGMA 2 -->
+    <div id="etapa2" class="enigma-container oculto">
+        <h3>2º Engrenagem: A Cortina de Fumaça</h3>
+        <p>Você entra em uma cabine escura e gelada. Você tem apenas um palito de fósforo na caixa. Dentro da cabine há uma lamparina a óleo, um aquecedor a gás e uma lareira com lenha seca. Qual você acende primeiro?</p>
+        <input type="text" id="resposta2" placeholder="Insira a dedução...">
+        <p id="erro2" class="erro">A engrenagem travou. Você pulou uma etapa fundamental no fluxo de execução.</p>
+        <button onclick="verificarEnigma('resposta2', ['fosforo', 'o fosforo', 'palito de fosforo', 'o palito de fosforo', 'palito'], 'etapa3', 'erro2')">Girar Mecanismo</button>
+    </div>
+
+    <!-- ENIGMA 3 -->
+    <div id="etapa3" class="enigma-container oculto">
+        <h3>3º Engrenagem: O Selo Final</h3>
+        <p>Abaixo encontra-se a matriz de decodificação. Encontre os termos ocultos e insira a frase completa e exata formada pelas seis palavras para quebrar o selo.</p>
+        
+        <table class="caca-palavras">
+            <tr><td>V</td><td>O</td><td>C</td><td>E</td><td>X</td><td>Y</td><td>Z</td><td>W</td></tr>
+            <tr><td>A</td><td>M</td><td>A</td><td>N</td><td>D</td><td>A</td><td>B</td><td>M</td></tr>
+            <tr><td>P</td><td>Q</td><td>D</td><td>F</td><td>G</td><td>H</td><td>I</td><td>A</td></tr>
+            <tr><td>A</td><td>S</td><td>T</td><td>I</td><td>U</td><td>V</td><td>X</td><td>N</td></tr>
+            <tr><td>M</td><td>N</td><td>L</td><td>O</td><td>Z</td><td>P</td><td>Q</td><td>D</td></tr>
+            <tr><td>A</td><td>B</td><td>C</td><td>D</td><td>E</td><td>E</td><td>F</td><td>A</td></tr>
+            <tr><td>Q</td><td>U</td><td>E</td><td>H</td><td>I</td><td>J</td><td>R</td><td>S</td></tr>
+            <tr><td>T</td><td>U</td><td>V</td><td>K</td><td>X</td><td>Y</td><td>L</td><td>P</td></tr>
+        </table>
+
+        <input type="text" id="resposta3" placeholder="Insira a mensagem completa...">
+        <p id="erro3" class="erro">O selo permanece intacto. A sequência não confere.</p>
+        <!-- As chaves do array de aceitação englobam variações sintáticas mínimas -->
+        <button onclick="verificarEnigma('resposta3', ['amanda manda dizer que ama voce', 'amanda manda dizer que te ama'], 'premio', 'erro3')">Girar Mecanismo</button>
+    </div>
+
+    <!-- PRÊMIO FINAL -->
+    <div id="premio" class="enigma-container oculto">
+        <h3>🔓 Cofre Aberto</h3>
+        <p>A mensagem foi decodificada e o último compartimento se abriu.</p>
+        <p style="text-align: center; margin-top: 30px; font-style: italic; color: #d4c4a8;">
+            "Sua surpresa aguarda. [retire na terça-feira, 01 de setembro no bairro Morada do Ouro]"
+        </p>
+    </div>
+
+    <script>
+        /**
+         * Normaliza a string removendo espaços extras,
+         * convertendo para minúsculas e removendo acentuações.
+         */
+        function normalizarTexto(texto) {
+            let textoNormalizado = texto.trim().toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+            return textoNormalizado.replace(/\s+/g, ' '); 
+        }
+
+        /**
+         * Valida a resposta do usuário contra um array de respostas aceitáveis.
+         */
+        function verificarEnigma(inputId, respostasAceitas, proximaEtapaId, erroId) {
+            const inputElement = document.getElementById(inputId);
+            const respostaUsuario = normalizarTexto(inputElement.value);
+            const erroElement = document.getElementById(erroId);
+            const botao = inputElement.nextElementSibling.nextElementSibling;
+            
+            const respostasValidas = respostasAceitas.map(res => normalizarTexto(res));
+
+            if (respostasValidas.includes(respostaUsuario)) {
+                // Sucesso
+                erroElement.style.display = 'none';
+                inputElement.disabled = true;
+                inputElement.style.borderColor = '#5ab847';
+                inputElement.style.color = '#5ab847';
+                botao.style.backgroundColor = '#1e3816';
+                botao.style.color = '#5ab847';
+                botao.disabled = true;
+                botao.innerText = "Mecanismo Destravado";
+                
+                // Exibe o próximo nível
+                const proximoNivel = document.getElementById(proximaEtapaId);
+                proximoNivel.classList.remove('oculto');
+                
+                // Rola a tela automaticamente para o novo bloco revelado
+                setTimeout(() => {
+                    proximoNivel.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }, 200);
+                
+            } else {
+                // Falha
+                erroElement.style.display = 'block';
+                inputElement.style.borderColor = '#cc4444';
+            }
+        }
+    </script>
+</body>
+</html>
